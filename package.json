@@ -5,6 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "prepare": "husky install",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:commit": "npx lint-staged",
+    "pretier": "prettier . --write",
+    "test:staged": "git diff --cached --name-only -- '*.spec.ts' | xargs -I {} ng test --include={} --browsers=ChromeHeadless --watch=false",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -26,13 +32,23 @@
     "@angular-devkit/build-angular": "^17.3.6",
     "@angular/cli": "^17.3.6",
     "@angular/compiler-cli": "^17.3.0",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/types": "^19.0.3",
+    "@eslint/js": "^9.2.0",
     "@types/jasmine": "~5.1.0",
+    "eslint": "^8.57.0",
+    "globals": "^15.1.0",
+    "husky": "^9.0.11",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.2"
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "typescript": "~5.4.2",
+    "typescript-eslint": "^7.8.0"
   }
 }
