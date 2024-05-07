@@ -1,2 +1,5 @@
-<poke-search/>
-<poke-list/>
+<div class="home">
+  <img [src]="IMG_LOGO" />
+  <poke-search (onSearch)="filter($event)" />
+  <poke-list [pokemons]="pokemonsFiltered" />
+</div>

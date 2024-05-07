@@ -1,1 +1,3 @@
-<p>search works!</p>
+<form [formGroup]="form" autocomplete='off' (ngSubmit)="submit()">
+  <input formControlName="query" placeholder='Search Pokémon...'/>
+</form>

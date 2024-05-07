@@ -1,0 +1,70 @@
+// MIXIN
+@mixin text {
+  @apply capitalize text-4xl font-bold;
+}
+
+.pokemon {
+  @apply relative 
+  bg-slate-500
+  rounded-3xl
+  cursor-pointer
+  p-6;
+  &-info {
+    @apply relative z-10 text-left flex flex-col gap-2;
+    small {
+      @include text;
+      @apply text-black;
+    }
+    h1 {
+      @include text;
+      @apply text-white;
+      text-shadow: 2px 2px 6px black;
+    }
+    &-stats {
+      @apply flex 
+      gap-4 
+      h-10;
+      div {
+        @apply px-4 
+        py-2
+        bg-black/[.5]
+        rounded-md
+        text-white
+        capitalize;
+      }
+    }
+    &-types {
+      @apply flex gap-4 h-10;
+      div {
+        @apply px-4
+        py-2
+        rounded-md
+        text-white
+        capitalize
+        flex gap-2;
+        img {
+          @apply w-6 h-6;
+        }
+      }
+    }
+  }
+  &-img {
+    @apply absolute
+    right-0
+    top-0
+    w-48
+    h-48
+    transition-all
+    delay-75
+    group-hover:scale-125;
+  }
+  &-bubble {
+    @apply absolute 
+    top-0 
+    right-0 
+    bg-white/[.2] 
+    w-48 
+    h-48 
+    rounded-full;
+  }
+}
