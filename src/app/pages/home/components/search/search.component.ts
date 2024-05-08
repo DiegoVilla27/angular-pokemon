@@ -19,6 +19,9 @@ export class SearchComponent {
   form!: FormGroup;
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>();
 
+  // ICONS
+  ICON_SEARCH: string = "";
+
   constructor(private _fb: FormBuilder) {
     this.buildData();
   }

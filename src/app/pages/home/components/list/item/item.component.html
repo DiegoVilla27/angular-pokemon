@@ -1,4 +1,4 @@
-<div class='pokemon group' [ngStyle]="pokemon.color! | getColorBackground">
+<div class='pokemon group' [ngStyle]="pokemon.color! | getColorBackground" *ngIf="!loading">
   <div class='pokemon-info'>
     <small>#{{ pokemon.id }}</small>
     <h1>{{ pokemon.name }}</h1>
@@ -17,5 +17,5 @@
     </div>
   </div>
   <div class='pokemon-bubble'></div>
-  <img class='pokemon-img' [src]='pokemon.avatar'/>
+  <img class='pokemon-img' [src]="pokemon.avatar" />
 </div>

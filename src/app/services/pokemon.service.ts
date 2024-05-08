@@ -24,7 +24,7 @@ export class PokemonService {
             entry.map((pokemon_entry: IPokemonEntry) =>
               this._http
                 .get<IPokemon>(
-                  `${environment.apiUrl}/pokemon/${pokemon_entry.pokemon_species.name}`
+                  `${environment.apiUrl}/pokemon/${pokemon_entry.entry_number}`
                 )
                 .pipe(map((pokemon: IPokemon) => this.mapPokemon(pokemon)))
             )

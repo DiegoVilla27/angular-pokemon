@@ -1,3 +1,6 @@
 input {
-  @apply w-80 h-10 rounded border-[0.5px] px-2 shadow-sm mb-5;
+  @apply w-80 h-10 rounded-full border-[0.5px] px-4 shadow-sm bg-slate-300 text-slate-600;
+  &::placeholder {
+    @apply text-slate-400;
+  }
 }

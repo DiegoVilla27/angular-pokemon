@@ -1,6 +1,9 @@
 .home {
-  @apply text-center p-5;
+  @apply p-5 flex flex-col gap-4 relative;
+  h1 {
+    @apply text-8xl font-montserrat-b;
+  }
   img {
-    @apply w-80 mx-auto mt-0 mb-5;
+    @apply w-80 absolute -right-20 -top-20 opacity-50;
   }
 }

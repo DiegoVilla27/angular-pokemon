@@ -1,68 +1,28 @@
-import { TestBed } from "@angular/core/testing";
-import { PokemonService } from "./pokemon.service";
-import { IResponsePokemon } from "../interfaces/pokemon.interface";
 import {
   HttpClientTestingModule,
   HttpTestingController
 } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
 import { environment } from "../../environments/environment.development";
+import { IResponsePokemon } from "../interfaces/pokemon.interface";
+import { PokemonService } from "./pokemon.service";
 
 const pokemonsResponse: IResponsePokemon = {
   "pokemon_entries": [
     {
       "entry_number": 150,
       "pokemon_species": {
-        "name": "mewtwo"
+        "name": "bulbasaur"
       }
     },
     {
       "entry_number": 151,
       "pokemon_species": {
-        "name": "mew"
+        "name": "bulbasaur"
       }
     }
   ]
 };
-
-/*const pokemonsExpected: IPokemon[] = [
-  {
-    "id": 145,
-    "name": "zapdos",
-    "height": 16,
-    "weight": 526,
-    "avatar":
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/145.png",
-    "types": [
-      {
-        "type": {
-          "name": "electric"
-        }
-      },
-      {
-        "type": {
-          "name": "flying"
-        }
-      }
-    ],
-    "color": [255, 220, 60]
-  },
-  {
-    "id": 150,
-    "name": "mewtwo",
-    "height": 20,
-    "weight": 1220,
-    "avatar":
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png",
-    "types": [
-      {
-        "type": {
-          "name": "psychic"
-        }
-      }
-    ],
-    "color": [180, 180, 200]
-  }
-];*/
 
 describe("PokemonService", () => {
   let service: PokemonService;

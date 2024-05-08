@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   pokemonsFiltered: IPokemon[] = [];
 
   // IMAGES
-  IMG_LOGO: string = "assets/images/logo.png";
+  IMG_POKE_BG: string = "assets/images/pokeball-bg.webp";
 
   constructor(private _pokemonSvc: PokemonService) {}
 

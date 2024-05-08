@@ -6,10 +6,10 @@ export interface IResponsePokemon {
 
 export interface IPokemonEntry {
   entry_number: number;
-  pokemon_species: IPokemonSpecies;
+  pokemon_species: IPokemonEspecies;
 }
 
-export interface IPokemonSpecies {
+export interface IPokemonEspecies {
   name: string;
 }
 

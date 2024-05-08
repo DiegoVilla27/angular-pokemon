@@ -1,5 +1,6 @@
 <div class="home">
-  <img [src]="IMG_LOGO" />
+  <img [src]='IMG_POKE_BG'/>
+  <h1>Pokedex</h1>
   <poke-search (onSearch)="filter($event)" />
   <poke-list [pokemons]="pokemonsFiltered" />
 </div>

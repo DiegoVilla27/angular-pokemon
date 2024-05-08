@@ -5,7 +5,6 @@
 
 .pokemon {
   @apply relative 
-  bg-slate-500
   rounded-3xl
   cursor-pointer
   p-6;
@@ -17,7 +16,7 @@
     }
     h1 {
       @include text;
-      @apply text-white;
+      @apply text-white font-montserrat-b;
       text-shadow: 2px 2px 6px black;
     }
     &-stats {
