@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   pokemons: IPokemonEntry[] = [];
   pokemonsFiltered: IPokemonEntry[] = [];
   pokemonSelected: IPokemon | null = null;
+  generation: number = 1;
 
   // IMAGES
   IMG_POKE_BG: string = "assets/images/pokeball-bg.webp";
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getPokemonSelected();
-    this.getPokemons();
+    this.getPokemons(this.generation);
   }
 
   ngOnDestroy(): void {
@@ -38,11 +39,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getPokemons(): void {
-    this._pokemonSvc.getPokemons().subscribe((pokemons: IPokemonEntry[]) => {
-      this.pokemons = pokemons;
-      this.pokemonsFiltered = pokemons;
-    });
+  getPokemons(generation: number): void {
+    this._pokemonSvc
+      .getPokemons(generation)
+      .subscribe((pokemons: IPokemonEntry[]) => {
+        this.pokemons = pokemons;
+        this.pokemonsFiltered = pokemons;
+      });
   }
 
   filter(query: string): void {
@@ -62,5 +65,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (pokemon: IPokemon | null) => (this.pokemonSelected = pokemon)
       );
+  }
+
+  changeGeneration(generation: number): void {
+    if (generation === 1) this.generation = 2;
+    else this.generation = 1;
+    this.getPokemons(this.generation);
   }
 }

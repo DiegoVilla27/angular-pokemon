@@ -1,6 +1,9 @@
 <div class="home">
   <img [src]="IMG_POKE_BG" />
-  <h1>Pokedex</h1>
+  <div>
+    <h1>Pokedex</h1>
+    <button (click)="changeGeneration(generation)">Gen. {{ generation === 1 ? 2 : 1}}</button>
+  </div>
   <poke-search (onSearch)="filter($event)" />
   <poke-list [pokemonsEntry]="pokemonsFiltered" />
 </div>

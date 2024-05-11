@@ -24,9 +24,9 @@ export class PokemonService {
 
   constructor(private _http: HttpClient) {}
 
-  getPokemons(): Observable<IPokemonEntry[]> {
+  getPokemons(generation: number): Observable<IPokemonEntry[]> {
     return this._http
-      .get<IPokemonList>(`${environment.apiUrl}/generation/1`)
+      .get<IPokemonList>(`${environment.apiUrl}/generation/${generation}`)
       .pipe(
         map<IPokemonList, IPokemonSpecies[]>(
           (list: IPokemonList) => list.pokemon_species
@@ -76,15 +76,14 @@ export class PokemonService {
   }
 
   mapSpeciesToEntry(species: IPokemonSpecies[]): IPokemonEntry[] {
-    return species.map<IPokemonEntry>(
-      (specie: IPokemonSpecies, index: number) => {
-        return {
-          entry_number: index + 1,
-          pokemon_species: specie,
-          evolution_chain: null
-        };
-      }
-    );
+    return species.map<IPokemonEntry>((specie: IPokemonSpecies) => {
+      const entry_number: string = specie.url.match(/\/(\d+)\/$/)![1];
+      return {
+        entry_number: Number(entry_number),
+        pokemon_species: specie,
+        evolution_chain: null
+      };
+    });
   }
 
   sortingPokemon(pokemons: IPokemonSpecies[]): IPokemonSpecies[] {
