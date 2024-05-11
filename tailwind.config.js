@@ -2,6 +2,7 @@
 /* eslint-env node */
 module.exports = {
   content: ["./src/**/*.{html,ts,css,scss,sass,less,styl}"],
+  important: true,
   theme: {
     extend: {
       fontFamily: {

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, Renderer2 } from "@angular/core";
 import { IPokemon, IPokemonAvatar } from "../../interfaces/pokemon.interface";
 import { ColorBackgroundPipe } from "../../pipes/color-background.pipe";
 import { ColorTypePipe } from "../../pipes/color-type.pipe";
@@ -28,7 +28,10 @@ export class DisplayItemComponent {
   @Input() pokemon!: IPokemon;
   ICON_CLOSE: string = "assets/icons/close.svg";
 
-  constructor(private _pokemonSvc: PokemonService) {}
+  constructor(
+    private _pokemonSvc: PokemonService,
+    private _renderer: Renderer2
+  ) {}
 
   ngOnInit(): void {
     this.getPokemon();
@@ -43,6 +46,7 @@ export class DisplayItemComponent {
   }
 
   close(): void {
+    this._renderer.setStyle(document.body, "overflow-y", "auto");
     this._pokemonSvc.setPokemonSelected(null);
   }
 }

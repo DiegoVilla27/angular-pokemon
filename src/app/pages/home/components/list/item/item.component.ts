@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, Renderer2 } from "@angular/core";
 import { prominent } from "color.js";
 import { GradientBackgroundPipe } from "../../../../../pipes/gradient-background.pipe";
 import { ColorTypePipe } from "../../../../../pipes/color-type.pipe";
@@ -27,7 +27,10 @@ export class ItemComponent {
   pokemon!: IPokemon;
   loading: boolean = true;
 
-  constructor(private _pokemonSvc: PokemonService) {}
+  constructor(
+    private _pokemonSvc: PokemonService,
+    private _renderer: Renderer2
+  ) {}
 
   ngOnInit(): void {
     this.getPokemon();
@@ -51,6 +54,7 @@ export class ItemComponent {
   }
 
   selectPokemon(pokemon: IPokemon): void {
+    this._renderer.setStyle(document.body, "overflow-y", "hidden");
     this._pokemonSvc.setPokemonSelected(pokemon);
   }
 }

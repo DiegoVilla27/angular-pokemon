@@ -24,7 +24,12 @@
           <img [src]="type | iconType" />{{ type }}
         </div>
       </div>
-      <div class="modal-card-content-stats" [ngClass]="{'mb-2': pokemon.evolutions && pokemon.evolutions.length <= 1}">
+      <div
+        class="modal-card-content-stats"
+        [ngClass]="{
+          'mb-2': pokemon.evolutions && pokemon.evolutions.length <= 1
+        }"
+      >
         <div
           *ngFor="let stats of pokemon.stats"
           class="modal-card-content-stats-content"
@@ -46,9 +51,19 @@
         </div>
       </div>
     </div>
-    <div class="modal-card-footer" *ngIf="pokemon.evolutions && pokemon.evolutions.length > 1">
+    <div
+      class="modal-card-footer"
+      *ngIf="pokemon.evolutions && pokemon.evolutions.length > 1"
+    >
       <hr />
-      <div class="modal-card-footer-items">
+      <div
+        class="modal-card-footer-items"
+        [ngClass]="{
+          '!flex-nowrap': pokemon.evolutions.length > 3,
+          '!justify-start': pokemon.evolutions.length > 3,
+          'overflow-x-auto': pokemon.evolutions.length > 3
+        }"
+      >
         <ng-container *ngFor="let evolution of pokemon.evolutions">
           <img
             [src]="evolution.avatar"
