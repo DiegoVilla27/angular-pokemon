@@ -9,9 +9,10 @@
   z-20
   flex
   justify-center
-  items-center
+  items-start
   p-2
-  sm:p-4;
+  sm:p-4
+  sm:items-center;
   &-card {
     @apply bg-slate-100
     p-2
