@@ -24,7 +24,7 @@
           <img [src]="type | iconType" />{{ type }}
         </div>
       </div>
-      <div class="modal-card-content-stats">
+      <div class="modal-card-content-stats" [ngClass]="{'mb-2': pokemon.evolutions && pokemon.evolutions.length <= 1}">
         <div
           *ngFor="let stats of pokemon.stats"
           class="modal-card-content-stats-content"

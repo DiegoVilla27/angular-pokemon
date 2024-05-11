@@ -11,6 +11,8 @@
   justify-center
   items-start
   p-2
+  overflow-y-auto
+  overflow-x-hidden
   sm:p-4
   sm:items-center;
   &-card {
@@ -21,6 +23,7 @@
     relative
     w-full
     sm:min-w-[470px]
+    sm:max-w-[576px]
     sm:w-auto
     sm:p-4;
     &-bg {
@@ -30,7 +33,7 @@
       left-1/2
       -translate-x-1/2
       top-0
-      h-2/5;
+      h-2/6;
     }
     &-header {
       @apply relative z-10;
