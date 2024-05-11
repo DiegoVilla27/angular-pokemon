@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run build:styles && ng build",
     "prepare": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
@@ -15,7 +15,7 @@
     "test": "ng test",
     "test:coverage": "ng test --code-coverage",
     "test:coverage:one": "ng test --code-coverage --watch --include=src/app/services/pokemon.service.spec.ts",
-    "build:styles": "node-sass --output-style=compressed src/styles.scss src/styles.min.css"
+    "build:styles": "node-sass src/styles.scss src/styles.min.css --output-style=compressed"
   },
   "private": true,
   "dependencies": {

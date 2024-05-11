@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/scss/fonts/fonts.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -44,11 +45,15 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "5kb",
+                  "maximumError": "8kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "styles": [
+                "src/assets/scss/fonts/fonts.scss",
+                "src/styles.min.css"
+              ]
             },
             "development": {
               "optimization": false,
