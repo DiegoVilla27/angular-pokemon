@@ -10,7 +10,7 @@
   flex
   justify-center
   items-start
-  p-2
+  p-4
   overflow-y-auto
   overflow-x-hidden
   sm:p-4
@@ -50,7 +50,7 @@
       relative
       z-10;
       img {
-        @apply w-60
+        @apply w-48
         object-contain
         sm:w-72;
       }
@@ -62,26 +62,40 @@
       }
       &-types {
         @apply flex 
-        gap-4 
-        h-10
-        mt-4;
+        gap-2
+        h-fit
+        mt-2
+        sm:h-10
+        sm:mt-4
+        sm:gap-4;
         div {
-          @apply px-4
-          py-2
+          @apply px-2
+          py-1
+          text-sm
           rounded-md
           text-white
           capitalize
-          flex gap-2;
+          flex 
+          gap-2
+          items-center
+          sm:px-4
+          sm:py-2
+          sm:text-base;
           img {
-            @apply w-6 h-6;
+            @apply w-4 
+            h-4
+            sm:w-6
+            sm:h-6;
           }
         }
       }
       &-stats {
-        @apply mt-4
-        px-2
+        @apply mt-2
+        px-4
         w-full
-        sm:px-4
+        flex
+        flex-col
+        gap-1
         sm:mt-8;
         &-content {
           @apply flex
@@ -96,7 +110,10 @@
             sm:text-base;
           }
           &-value {
-            @apply font-montserrat-l w-9;
+            @apply font-montserrat-l 
+            w-9
+            text-sm
+            sm:text-base;
           }
           &-progress {
             @apply flex-[2]
@@ -121,8 +138,9 @@
       z-10
       flex
       flex-col
-      mt-4
-      text-center;
+      mt-2
+      text-center
+      sm:mt-4;
       hr {
         @apply mx-4;
       }
@@ -134,7 +152,7 @@
         items-center
         flex-wrap;
         img {
-          @apply h-[90px]
+          @apply h-[80px]
           sm:h-24;
         }
       }
