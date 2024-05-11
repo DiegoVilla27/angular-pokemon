@@ -1,0 +1,61 @@
+<div class="modal">
+  <div class="modal-card">
+    <div
+      class="modal-card-bg"
+      [ngStyle]="{ 'background-image': pokemon.color! | gradientBackground }"
+    ></div>
+    <div class="modal-card-header">
+      <img
+        [src]="ICON_CLOSE"
+        (click)="close()"
+      />
+    </div>
+    <div class="modal-card-content">
+      <img
+        [src]="pokemon.avatar"
+        alt="Avatar {{ pokemon.name }}"
+      />
+      <h1>{{ pokemon.name }}</h1>
+      <div class="modal-card-content-types">
+        <div
+          *ngFor="let type of pokemon.types"
+          [ngStyle]="type | colorType"
+        >
+          <img [src]="type | iconType" />{{ type }}
+        </div>
+      </div>
+      <div class="modal-card-content-stats">
+        <div
+          *ngFor="let stats of pokemon.stats"
+          class="modal-card-content-stats-content"
+        >
+          <p class="modal-card-content-stats-content-name">
+            {{ stats.name | nameStats }}
+          </p>
+          <p class="modal-card-content-stats-content-value">
+            {{ stats.value }}
+          </p>
+          <div class="modal-card-content-stats-content-progress">
+            <div
+              [ngStyle]="{
+                'width': stats.value | percentageStats,
+                'background-image': pokemon.color! | gradientBackground
+              }"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-card-footer" *ngIf="pokemon.evolutions && pokemon.evolutions.length > 1">
+      <hr />
+      <div class="modal-card-footer-items">
+        <ng-container *ngFor="let evolution of pokemon.evolutions">
+          <img
+            [src]="evolution.avatar"
+            alt="Evolution {{ pokemon.name }}"
+          />
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

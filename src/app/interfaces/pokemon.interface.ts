@@ -1,37 +1,62 @@
 import { Rgb } from "./colors.interface";
 
-export interface IResponsePokemon {
-  pokemon_entries: IPokemonEntry[];
+// LIST
+export interface IPokemonList {
+  pokemon_species: IPokemonSpecies[];
 }
 
 export interface IPokemonEntry {
   entry_number: number;
-  pokemon_species: IPokemonEspecies;
+  pokemon_species: IPokemonSpecies;
+  evolution_chain: string | null;
 }
 
-export interface IPokemonEspecies {
+export interface IPokemonSpecies {
   name: string;
+  url: string;
 }
 
-export interface IPokemon {
+// POKEMON
+
+export interface IPokemon extends IPokemonAvatar {
   height: number;
   id: number;
   name: string;
-  avatar: string | null;
-  types: ITypePokemon[];
+  types: string[];
+  stats: IStats[];
   weight: number;
-  sprites?: Sprites;
+  evolution_chain: string | null;
+  evolutions?: IPokemonAvatar[];
   color?: string | number | Rgb;
 }
 
-interface Sprites {
-  front_default: string;
-}
-
-interface ITypePokemon {
-  type: IType;
-}
-
-interface IType {
+export interface IStats {
+  value: number;
   name: string;
+}
+
+// EVOLUTION
+
+export interface IPokemonAvatar {
+  avatar: string | null;
+}
+
+export interface IEvolutionChain {
+  chain: IEvolutionChainData;
+}
+
+export interface IEvolutionChainData {
+  evolves_to: IEvolutionChainData[];
+  species: SpeciesData;
+}
+
+export interface SpeciesData {
+  name: string;
+  url: string;
+}
+
+export interface IPokemonEvolutionChain {
+  evolution_chain: {
+    url: string;
+  };
 }

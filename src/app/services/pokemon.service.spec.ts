@@ -4,22 +4,18 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { environment } from "../../environments/environment.development";
-import { IResponsePokemon } from "../interfaces/pokemon.interface";
+import { IPokemonList } from "../interfaces/pokemon.interface";
 import { PokemonService } from "./pokemon.service";
 
-const pokemonsResponse: IResponsePokemon = {
-  "pokemon_entries": [
+const pokemonsResponse: IPokemonList = {
+  "pokemon_species": [
     {
-      "entry_number": 150,
-      "pokemon_species": {
-        "name": "bulbasaur"
-      }
+      "name": "bulbasaur",
+      "url": "https://pokeapi.co/api/v2/pokemon-species/1/"
     },
     {
-      "entry_number": 151,
-      "pokemon_species": {
-        "name": "bulbasaur"
-      }
+      "name": "bulbasaur",
+      "url": "https://pokeapi.co/api/v2/pokemon-species/1/"
     }
   ]
 };
@@ -44,7 +40,7 @@ describe("PokemonService", () => {
   it("Verify getPokemonList GET", () => {
     service.getPokemons().subscribe();
     const req = httpTestingController.expectOne(
-      `${environment.apiUrl}/pokedex/2`
+      `${environment.apiUrl}/generation/1`
     );
     req.flush(pokemonsResponse);
     expect(req.request.method).toEqual("GET");

@@ -1,6 +1,11 @@
 <div class="home">
-  <img [src]='IMG_POKE_BG'/>
+  <img [src]="IMG_POKE_BG" />
   <h1>Pokedex</h1>
   <poke-search (onSearch)="filter($event)" />
-  <poke-list [pokemons]="pokemonsFiltered" />
+  <poke-list [pokemonsEntry]="pokemonsFiltered" />
 </div>
+
+<poke-display-item
+  *ngIf="pokemonSelected"
+  [pokemon]="pokemonSelected!"
+></poke-display-item>

@@ -20,7 +20,7 @@ export class SearchComponent {
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>();
 
   // ICONS
-  ICON_SEARCH: string = "";
+  ICON_SEARCH: string = "assets/icons/search.svg";
 
   constructor(private _fb: FormBuilder) {
     this.buildData();

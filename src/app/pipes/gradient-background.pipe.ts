@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Rgb } from "../app/interfaces/colors.interface";
+import { Rgb } from "../interfaces/colors.interface";
 
 @Pipe({
-  name: "getColorBackground",
+  name: "gradientBackground",
   standalone: true
 })
-export class GetColorBackgroundPipe implements PipeTransform {
-  transform(color?: string | number | Rgb): object {
+export class GradientBackgroundPipe implements PipeTransform {
+  transform(color?: string | number | Rgb): string {
     if (color) {
       const colorMapType: Rgb = color as Rgb;
       const [rX2, gX2, bX2]: number[] = this.darkenColor(
@@ -34,13 +34,9 @@ export class GetColorBackgroundPipe implements PipeTransform {
         rgb(${rX2}, ${gX2}, ${bX2}) 30%,
         rgb(${colorMapType[0]}, ${colorMapType[1]}, ${colorMapType[2]}) 50%
       )`;
-      return {
-        "background-image": color ? colorFilled : `rgb(255, 255, 255)`
-      };
+      return color ? colorFilled : "rgb(0, 0, 0)";
     }
-    return {
-      "background-color": `rgb(255, 255, 255)`
-    };
+    return "rgb(0, 0, 0)";
   }
 
   darkenColor(color: Rgb, percentage: number): number[] {

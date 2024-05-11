@@ -1,6 +1,31 @@
-input {
-  @apply w-80 h-10 rounded-full border-[0.5px] px-4 shadow-sm bg-slate-300 text-slate-600;
-  &::placeholder {
-    @apply text-slate-400;
+div {
+  @apply grid grid-cols-12 gap-5;
+  form {
+    @apply 
+    relative 
+    col-span-12
+    md:col-span-6
+    lg:col-span-4
+    2xl:col-span-3;
+    input {
+      @apply
+      w-full 
+      h-10 
+      rounded-full 
+      border-[0.5px] 
+      pl-10 
+      pr-4 
+      shadow-sm 
+      bg-slate-200 
+      text-slate-600
+      shadow-md;
+      &::placeholder {
+        @apply text-slate-400;
+      }
+    }
+    img {
+      @apply w-5 h-5 object-contain absolute top-1/2 -translate-y-1/2 left-3;
+    }
   }
+  
 }

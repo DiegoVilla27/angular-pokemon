@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { EColors, IMapColors } from "../app/interfaces/colors.interface";
+import { EColors, IMapColors } from "../interfaces/colors.interface";
 
 @Pipe({
-  name: "getColorByTypePokemon",
+  name: "colorType",
   standalone: true
 })
-export class GetColorByTypePokemonPipe implements PipeTransform {
+export class ColorTypePipe implements PipeTransform {
   transform(name: string): object {
     const types: IMapColors = {
       "normal": EColors.normal,

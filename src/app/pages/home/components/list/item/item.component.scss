@@ -7,12 +7,16 @@
   @apply relative 
   rounded-3xl
   cursor-pointer
-  p-6;
+  p-6
+  hover:scale-90
+  transition-all
+  delay-100
+  ease-linear;
   &-info {
     @apply relative z-10 text-left flex flex-col gap-2;
     small {
       @include text;
-      @apply text-black;
+      @apply text-black font-montserrat-l;
     }
     h1 {
       @include text;
@@ -29,6 +33,7 @@
         bg-black/[.5]
         rounded-md
         text-white
+        font-montserrat-r
         capitalize;
       }
     }
@@ -54,8 +59,9 @@
     w-48
     h-48
     transition-all
-    delay-75
-    group-hover:scale-125;
+    delay-100
+    ease-linear
+    group-hover:scale-150;
   }
   &-bubble {
     @apply absolute 

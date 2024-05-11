@@ -26,7 +26,3 @@ export type Color = Hex | Rgb | (Hex | Rgb)[];
 export interface IMapColors {
   [key: string]: EColors;
 }
-
-export interface IMapIcons {
-  [key: string]: string;
-}

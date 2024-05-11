@@ -1,15 +1,15 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { IMapIcons } from "../app/interfaces/colors.interface";
+import { IDictionaryString } from "../interfaces/general.interface";
 
 @Pipe({
-  name: "getIconByTypePokemon",
+  name: "iconType",
   standalone: true
 })
-export class GetIconByTypePokemonPipe implements PipeTransform {
+export class IconTypePipe implements PipeTransform {
   url: string = "assets/images/types";
 
   transform(name: string): string {
-    const types: IMapIcons = {
+    const types: IDictionaryString = {
       "normal": `${this.url}/normal.svg`,
       "fighting": `${this.url}/fighting.svg`,
       "flying": `${this.url}/flying.svg`,

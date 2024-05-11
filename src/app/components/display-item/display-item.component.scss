@@ -1,0 +1,128 @@
+.modal {
+  @apply fixed
+  h-screen
+  w-screen
+  backdrop-blur-sm
+  top-0
+  left-0
+  bg-black/[.8]
+  z-20
+  flex
+  justify-center
+  items-center
+  p-4;
+  &-card {
+    @apply bg-slate-100
+    p-4
+    rounded-3xl
+    overflow-hidden
+    relative
+    sm:min-w-[470px];
+    &-bg {
+      @apply w-[500px]
+      rounded-b-[50%]
+      absolute
+      left-1/2
+      -translate-x-1/2
+      top-0
+      h-2/5;
+    }
+    &-header {
+      @apply relative z-10;
+      img {
+        @apply ml-auto
+        h-10
+        cursor-pointer;
+      }
+    }
+    &-content {
+      @apply flex
+      flex-col
+      items-center
+      relative
+      z-10;
+      img {
+        @apply w-72
+        object-contain;
+      }
+      h1 {
+        @apply text-4xl
+        capitalize
+        font-montserrat-b;
+      }
+      &-types {
+        @apply flex 
+        gap-4 
+        h-10
+        mt-4;
+        div {
+          @apply px-4
+          py-2
+          rounded-md
+          text-white
+          capitalize
+          flex gap-2;
+          img {
+            @apply w-6 h-6;
+          }
+        }
+      }
+      &-stats {
+        @apply mt-8
+        px-4
+        w-full;
+        &-content {
+          @apply flex
+          flex-row
+          gap-4
+          items-center;
+          &-name {
+            @apply font-montserrat-s
+            capitalize
+            flex-1;
+          }
+          &-value {
+            @apply font-montserrat-l;
+          }
+          &-progress {
+            @apply flex-[2]
+            w-full
+            bg-slate-200
+            rounded-full
+            flex
+            items-center
+            justify-start
+            p-1
+            box-content;
+            div {
+              @apply h-3
+              rounded-full;
+            }
+          }
+        }
+      }
+    }
+    &-footer {
+      @apply relative
+      z-10
+      flex
+      flex-col
+      mt-4
+      text-center;
+      hr {
+        @apply mx-4;
+      }
+      &-items {
+        @apply flex
+        gap-5
+        mb-2
+        justify-center
+        items-center
+        flex-wrap;
+        img {
+          @apply h-24;
+        }
+      }
+    }
+  }
+}
