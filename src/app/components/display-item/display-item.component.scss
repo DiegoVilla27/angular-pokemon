@@ -10,16 +10,20 @@
   flex
   justify-center
   items-center
-  p-4;
+  p-2
+  sm:p-4;
   &-card {
     @apply bg-slate-100
-    p-4
+    p-2
     rounded-3xl
     overflow-hidden
     relative
-    sm:min-w-[470px];
+    w-full
+    sm:min-w-[470px]
+    sm:w-auto
+    sm:p-4;
     &-bg {
-      @apply w-[500px]
+      @apply w-[576px]
       rounded-b-[50%]
       absolute
       left-1/2
@@ -42,13 +46,15 @@
       relative
       z-10;
       img {
-        @apply w-72
-        object-contain;
+        @apply w-60
+        object-contain
+        sm:w-72;
       }
       h1 {
-        @apply text-4xl
+        @apply text-3xl
         capitalize
-        font-montserrat-b;
+        font-montserrat-b
+        sm:text-4xl;
       }
       &-types {
         @apply flex 
@@ -68,9 +74,11 @@
         }
       }
       &-stats {
-        @apply mt-8
-        px-4
-        w-full;
+        @apply mt-4
+        px-2
+        w-full
+        sm:px-4
+        sm:mt-8;
         &-content {
           @apply flex
           flex-row
@@ -79,7 +87,9 @@
           &-name {
             @apply font-montserrat-s
             capitalize
-            flex-1;
+            flex-1
+            text-sm
+            sm:text-base;
           }
           &-value {
             @apply font-montserrat-l w-9;
@@ -120,7 +130,8 @@
         items-center
         flex-wrap;
         img {
-          @apply h-24;
+          @apply h-[90px]
+          sm:h-24;
         }
       }
     }

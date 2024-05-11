@@ -1,5 +1,5 @@
 .home {
-  @apply p-5 flex flex-col gap-4 relative;
+  @apply p-5 flex flex-col gap-4 relative overflow-x-hidden;
   h1 {
     @apply font-montserrat-b
     text-5xl

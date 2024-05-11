@@ -20,8 +20,7 @@
     }
     h1 {
       @include text;
-      @apply text-white font-montserrat-b;
-      text-shadow: 2px 2px 6px black;
+      @apply text-white font-montserrat-b text-shadow;
     }
     &-stats {
       @apply flex 
