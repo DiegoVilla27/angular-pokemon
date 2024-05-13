@@ -38,7 +38,7 @@ describe("PokemonService", () => {
   });
 
   it("Verify getPokemonList GET", () => {
-    service.getPokemons().subscribe();
+    service.getPokemons(1).subscribe();
     const req = httpTestingController.expectOne(
       `${environment.apiUrl}/generation/1`
     );
