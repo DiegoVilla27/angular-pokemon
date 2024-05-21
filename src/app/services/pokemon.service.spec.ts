@@ -4,10 +4,10 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { environment } from "../../environments/environment.development";
-import { IPokemonList } from "../interfaces/pokemon.interface";
 import { PokemonService } from "./pokemon.service";
+import { IGenerationResponse } from "../interfaces/pokemon-api.interface";
 
-const pokemonsResponse: IPokemonList = {
+const pokemonsResponse: IGenerationResponse = {
   "pokemon_species": [
     {
       "name": "bulbasaur",

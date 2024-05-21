@@ -1,0 +1,11 @@
+@layer utilities {
+  // X
+  .rotate-x-70 {
+    transform: rotateX(70deg);
+  }
+
+  // Y
+  .rotate-y-70 {
+    transform: rotateY(70deg);
+  }
+}

@@ -17,9 +17,46 @@
       cursor-pointer
       relative
       z-10;
+      box-shadow: 0 0 0 0 rgba(#ffffff, 1);
+      transform: scale(1);
+      animation: pulse 1.5s infinite;
     }
   }
   img {
     @apply w-80 absolute -right-20 -top-20 opacity-50 z-0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(#ffffff, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(#ffffff, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(#ffffff, 0);
+  }
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(#ffffff, 0.7);
+  }
+
+  70% {
+    -webkit-transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(#ffffff, 0);
+  }
+
+  100% {
+    -webkit-transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(#ffffff, 0);
   }
 }

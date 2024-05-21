@@ -1,19 +1,24 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, forkJoin, map, Observable, switchMap } from "rxjs";
-import { environment } from "../../environments/environment";
-import { IPokemonApi, Stat, Type } from "../interfaces/pokemon-api.interface";
 import {
+  BehaviorSubject,
+  delay,
+  forkJoin,
+  map,
+  Observable,
+  of,
+  switchMap
+} from "rxjs";
+import { environment } from "../../environments/environment";
+import {
+  Chain,
   IEvolutionChain,
-  IEvolutionChainData,
-  IPokemon,
-  IPokemonAvatar,
-  IPokemonEntry,
-  IPokemonEvolutionChain,
-  IPokemonList,
-  IPokemonSpecies,
-  IStats
-} from "../interfaces/pokemon.interface";
+  IGenerationResponse,
+  IPokemonApi,
+  IPokemonNameUrl,
+  IPokemonSpecies
+} from "../interfaces/pokemon-api.interface";
+import { IPokemon } from "../interfaces/pokemon.interface";
 
 @Injectable({
   providedIn: "root"
@@ -24,136 +29,109 @@ export class PokemonService {
 
   constructor(private _http: HttpClient) {}
 
-  getPokemons(generation: number): Observable<IPokemonEntry[]> {
+  getPokemons(generation: number): Observable<IPokemon[]> {
     return this._http
-      .get<IPokemonList>(`${environment.apiUrl}/generation/${generation}`)
-      .pipe(
-        map<IPokemonList, IPokemonSpecies[]>(
-          (list: IPokemonList) => list.pokemon_species
-        ),
-        map<IPokemonSpecies[], IPokemonSpecies[]>(
-          (species: IPokemonSpecies[]) => this.sortingPokemon(species)
-        ),
-        map<IPokemonSpecies[], IPokemonEntry[]>((species: IPokemonSpecies[]) =>
-          this.mapSpeciesToEntry(species)
-        ),
-        switchMap<IPokemonEntry[], Observable<IPokemonEntry[]>>(
-          (pokemonEntry: IPokemonEntry[]) =>
-            this.mapEvolutionChain(pokemonEntry)
-        )
-      );
-  }
-
-  getPokemon(
-    id: number,
-    isAvatar: boolean = false
-  ): Observable<IPokemon | IPokemonAvatar> {
-    return this._http
-      .get<IPokemonApi>(`${environment.apiUrl}/pokemon/${id}`)
-      .pipe(
-        map<IPokemonApi, IPokemon | IPokemonAvatar>((pokemon: IPokemonApi) =>
-          isAvatar ? this.mapPokemonAvatar(pokemon) : this.mapPokemon(pokemon)
-        )
-      );
-  }
-
-  getEvolutions(url: string): Observable<IPokemonAvatar[]> {
-    return this._http.get<IEvolutionChain>(url).pipe(
-      map<IEvolutionChain, IPokemonSpecies[]>((evolutions: IEvolutionChain) =>
-        this.extractEvolutions(evolutions.chain)
-      ),
-      switchMap<IPokemonSpecies[], Observable<(IPokemon | IPokemonAvatar)[]>>(
-        (evolutions: IPokemonSpecies[]) => {
-          return forkJoin<(IPokemon | IPokemonAvatar)[]>(
-            evolutions.map((evolution: IPokemonSpecies) => {
-              const entry_number = evolution.url.match(/\/(\d+)\/$/)![1];
-              return this.getPokemon(Number(entry_number), true);
-            })
-          );
-        }
+      .get<IGenerationResponse>(
+        `${environment.apiUrl}/generation/${generation}`
       )
-    );
+      .pipe(
+        delay(2000),
+        map((generation: IGenerationResponse) =>
+          this.sortingPokemon(generation.pokemon_species)
+        ),
+        switchMap((pokemons: IPokemonNameUrl[]) =>
+          this.getEvolutionUrl(pokemons)
+        ),
+        switchMap((pokemons: IPokemon[]) => this.getEvolution(pokemons)),
+        switchMap((pokemons: IPokemon[]) => this.getPokemon(pokemons)),
+        map((pokemons: IPokemon[]) => this.findPokemonCurrent(pokemons))
+      );
   }
 
-  mapSpeciesToEntry(species: IPokemonSpecies[]): IPokemonEntry[] {
-    return species.map<IPokemonEntry>((specie: IPokemonSpecies) => {
-      const entry_number: string = specie.url.match(/\/(\d+)\/$/)![1];
-      return {
-        entry_number: Number(entry_number),
-        pokemon_species: specie,
-        evolution_chain: null
-      };
-    });
-  }
-
-  sortingPokemon(pokemons: IPokemonSpecies[]): IPokemonSpecies[] {
-    return pokemons.sort((a: IPokemonSpecies, b: IPokemonSpecies) => {
+  sortingPokemon(pokemons: IPokemonNameUrl[]): IPokemonNameUrl[] {
+    return pokemons.sort((a: IPokemonNameUrl, b: IPokemonNameUrl) => {
       const numA = parseInt(a.url.match(/\/(\d+)\/$/)![1]);
       const numB = parseInt(b.url.match(/\/(\d+)\/$/)![1]);
       return numA - numB;
     });
   }
 
-  mapEvolutionChain(
-    pokemonEntry: IPokemonEntry[]
-  ): Observable<IPokemonEntry[]> {
-    return forkJoin<IPokemonEntry[]>(
-      pokemonEntry.map<Observable<IPokemonEntry>>(
-        (pokemonEntry: IPokemonEntry) => {
-          return this._http
-            .get<IPokemonEvolutionChain>(pokemonEntry.pokemon_species.url)
-            .pipe<IPokemonEntry>(
-              map<IPokemonEvolutionChain, IPokemonEntry>(
-                (res: IPokemonEvolutionChain) => {
-                  return {
-                    ...pokemonEntry,
-                    evolution_chain: res.evolution_chain.url ?? null
-                  };
-                }
-              )
-            );
-        }
-      )
+  getEvolutionUrl(pokemons: IPokemonNameUrl[]): Observable<IPokemon[]> {
+    return forkJoin<IPokemon[]>(
+      pokemons.map((pokemon: IPokemonNameUrl) => {
+        return this._http.get<IPokemonSpecies>(pokemon.url).pipe(
+          map((res: IPokemonSpecies) => {
+            return {
+              ...pokemon,
+              evolution_url: res.evolution_chain.url ?? null
+            };
+          })
+        );
+      })
     );
   }
 
-  mapPokemon(pokemon: IPokemonApi): IPokemon {
-    const { id, name, height, weight, sprites, types, stats } = pokemon;
-    return {
-      id,
-      name,
-      height,
-      weight,
-      avatar: sprites?.other?.home.front_default ?? null,
-      types: [...types.map<string>((type: Type) => type.type.name)],
-      evolution_chain: null,
-      stats: [
-        ...stats.map<IStats>((stat: Stat) => {
-          return {
-            value: stat.base_stat,
-            name: stat.stat.name
-          };
-        })
-      ]
-    };
+  getEvolution(pokemons: IPokemon[]): Observable<IPokemon[]> {
+    return forkJoin<IPokemon[]>(
+      pokemons.map((pokemon: IPokemon) => {
+        return this._http.get<IEvolutionChain>(pokemon.evolution_url!).pipe(
+          map((evolutions: IEvolutionChain) =>
+            this.extractEvolutions(evolutions.chain)
+          ),
+          map((evolutions: string[]) => {
+            return {
+              ...pokemon,
+              evolutions
+            };
+          })
+        );
+      })
+    );
   }
 
-  mapPokemonAvatar(pokemon: IPokemonApi): IPokemonAvatar {
-    const { sprites } = pokemon;
-    return {
-      avatar: sprites?.other?.home.front_default ?? null
-    };
-  }
-
-  extractEvolutions(
-    chain: IEvolutionChainData,
-    speciesArray: IPokemonSpecies[] = []
-  ): IPokemonSpecies[] {
-    speciesArray.push(chain.species);
-    chain.evolves_to.forEach((evolution: IEvolutionChainData) => {
+  extractEvolutions(chain: Chain, speciesArray: string[] = []): string[] {
+    speciesArray.push(chain.species.name);
+    chain.evolves_to.forEach((evolution: Chain) => {
       this.extractEvolutions(evolution, speciesArray);
     });
     return speciesArray;
+  }
+
+  getPokemon(pokemons: IPokemon[]): Observable<IPokemon[]> {
+    return forkJoin<IPokemon[]>(
+      pokemons.map((pokemon: IPokemon) => {
+        if (!pokemon.evolutions || pokemon.evolutions.length === 0) {
+          return of({
+            ...pokemon,
+            evolution_data: []
+          });
+        }
+        const evolutionRequests: Observable<IPokemonApi>[] =
+          pokemon.evolutions.map((evolution: string) =>
+            this._http.get<IPokemonApi>(
+              `${environment.apiUrl}/pokemon/${evolution}`
+            )
+          );
+        return forkJoin(evolutionRequests).pipe(
+          map((evolution_data: IPokemonApi[]) => ({
+            ...pokemon,
+            evolution_data
+          }))
+        );
+      })
+    );
+  }
+
+  findPokemonCurrent(pokemons: IPokemon[]) {
+    return pokemons.map((pokemon: IPokemon) => {
+      const find: IPokemonApi = pokemon.evolution_data!.find(
+        (evolution: IPokemonApi) => evolution.name === pokemon.name
+      )!;
+      return {
+        ...pokemon,
+        info: find
+      };
+    });
   }
 
   // OBS

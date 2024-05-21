@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { IPokemonEntry } from "../../../../interfaces/pokemon.interface";
+import { IPokemon } from "../../../../interfaces/pokemon.interface";
 import { ItemComponent } from "./item/item.component";
 
 @Component({
@@ -11,5 +11,5 @@ import { ItemComponent } from "./item/item.component";
   styleUrl: "./list.component.scss"
 })
 export class ListComponent {
-  @Input() pokemonsEntry: IPokemonEntry[] = [];
+  @Input() pokemons: IPokemon[] = [];
 }

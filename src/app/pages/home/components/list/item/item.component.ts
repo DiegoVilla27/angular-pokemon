@@ -1,21 +1,24 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input, Renderer2 } from "@angular/core";
 import { prominent } from "color.js";
-import { GradientBackgroundPipe } from "../../../../../pipes/gradient-background.pipe";
-import { ColorTypePipe } from "../../../../../pipes/color-type.pipe";
-import { IconTypePipe } from "../../../../../pipes/icon-type.pipe";
 import { Color } from "../../../../../interfaces/colors.interface";
-import {
-  IPokemon,
-  IPokemonAvatar,
-  IPokemonEntry
-} from "../../../../../interfaces/pokemon.interface";
+import { IPokemon } from "../../../../../interfaces/pokemon.interface";
+import { ColorTypePipe } from "../../../../../pipes/color-type.pipe";
+import { GradientBackgroundPipe } from "../../../../../pipes/gradient-background.pipe";
+import { IconTypePipe } from "../../../../../pipes/icon-type.pipe";
 import { PokemonService } from "../../../../../services/pokemon.service";
+import { SkeletonComponent } from "./components/skeleton/skeleton.component";
 
 @Component({
   selector: "poke-item",
   standalone: true,
-  imports: [CommonModule, GradientBackgroundPipe, ColorTypePipe, IconTypePipe],
+  imports: [
+    CommonModule,
+    GradientBackgroundPipe,
+    ColorTypePipe,
+    IconTypePipe,
+    SkeletonComponent
+  ],
   templateUrl: "./item.component.html",
   styleUrl: "./item.component.scss"
 })
@@ -23,8 +26,7 @@ export class ItemComponent {
   // IMAGES
   IMG_POKE: string = "assets/images/pokeball.webp";
 
-  @Input() pokemonEntry!: IPokemonEntry;
-  pokemon!: IPokemon;
+  @Input() pokemon!: IPokemon;
   loading: boolean = true;
 
   constructor(
@@ -33,21 +35,20 @@ export class ItemComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getPokemon();
+    this.addColorPokemon();
   }
 
-  getPokemon(): void {
-    this._pokemonSvc
-      .getPokemon(Number(this.pokemonEntry.entry_number))
-      .subscribe((pokemon: IPokemon | IPokemonAvatar) => {
-        this.pokemon = pokemon as IPokemon;
-        this.pokemon.evolution_chain = this.pokemonEntry.evolution_chain;
-        this.setColorBG(this.pokemon.avatar!);
-      });
+  async addColorPokemon(): Promise<void> {
+    await this.setColorBG(this.pokemon);
   }
 
-  async setColorBG(avatar: string): Promise<void> {
-    await prominent(avatar).then((color: Color) => {
+  async setColorBG(pokemon: IPokemon): Promise<void> {
+    const { info } = pokemon;
+    const { sprites } = info!;
+    const { other } = sprites;
+    const { home } = other!;
+    const { front_default } = home;
+    await prominent(front_default).then((color: Color) => {
       this.loading = false;
       return (this.pokemon.color = color[1]);
     });

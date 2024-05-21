@@ -1,25 +1,50 @@
+// GENERATION
+export interface IGenerationResponse {
+  pokemon_species: IPokemonNameUrl[];
+}
+export interface IPokemonNameUrl {
+  name: string;
+  url: string;
+}
+export interface Name {
+  language: IPokemonNameUrl;
+  name: string;
+}
+
+// SPECIES
+export interface IPokemonSpecies {
+  evolution_chain: {
+    url: string;
+  };
+}
+
+// EVOLUTION
+export interface IEvolutionChain {
+  chain: Chain;
+}
+
+export interface Chain {
+  evolves_to: Chain[];
+  species: IPokemonNameUrl;
+}
+
+// POKEMON
 export interface IPokemonApi {
   height: number;
   id: number;
   name: string;
-  species: Species;
   sprites: Sprites;
   stats: Stat[];
   types: Type[];
   weight: number;
 }
 
-export interface Species {
-  name: string;
-  url: string;
+export interface Sprites {
+  other?: Other;
 }
 
 export interface Other {
   home: Home;
-}
-
-export interface Sprites {
-  other?: Other;
 }
 
 export interface Home {
@@ -28,11 +53,9 @@ export interface Home {
 
 export interface Stat {
   base_stat: number;
-  effort: number;
-  stat: Species;
+  stat: IPokemonNameUrl;
 }
 
 export interface Type {
-  slot: number;
-  type: Species;
+  type: IPokemonNameUrl;
 }

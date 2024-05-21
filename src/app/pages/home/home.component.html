@@ -1,14 +1,20 @@
-<div class="home">
-  <img [src]="IMG_POKE_BG" />
-  <div>
-    <h1>Pokedex</h1>
-    <button (click)="changeGeneration(generation)">Gen. {{ generation === 1 ? 2 : 1}}</button>
+<ng-container *ngIf="!loading">
+  <div class="home">
+    <img [src]="IMG_POKE_BG" />
+    <div>
+      <h1>Pokedex</h1>
+      <button (click)="changeGeneration(generation)">
+        Gen. {{ generation === 1 ? 2 : 1 }}
+      </button>
+    </div>
+    <poke-search (onSearch)="filter($event)" />
+    <poke-list [pokemons]="pokemonsFiltered" />
   </div>
-  <poke-search (onSearch)="filter($event)" />
-  <poke-list [pokemonsEntry]="pokemonsFiltered" />
-</div>
 
-<poke-display-item
-  *ngIf="pokemonSelected"
-  [pokemon]="pokemonSelected!"
-></poke-display-item>
+  <poke-display-item
+    *ngIf="pokemonSelected"
+    [pokemon]="pokemonSelected!"
+  ></poke-display-item>
+</ng-container>
+
+<poke-spinner *ngIf="loading"></poke-spinner>

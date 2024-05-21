@@ -1,25 +1,33 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subject, takeUntil } from "rxjs";
 import { DisplayItemComponent } from "../../components/display-item/display-item.component";
-import { IPokemon, IPokemonEntry } from "../../interfaces/pokemon.interface";
+import { SpinnerComponent } from "../../components/spinner/spinner.component";
+import { IPokemon } from "../../interfaces/pokemon.interface";
 import { PokemonService } from "../../services/pokemon.service";
 import { ListComponent } from "./components/list/list.component";
 import { SearchComponent } from "./components/search/search.component";
-import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "poke-home",
   standalone: true,
-  imports: [CommonModule, SearchComponent, ListComponent, DisplayItemComponent],
+  imports: [
+    CommonModule,
+    SearchComponent,
+    ListComponent,
+    DisplayItemComponent,
+    SpinnerComponent
+  ],
   providers: [PokemonService],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss"
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  pokemons: IPokemonEntry[] = [];
-  pokemonsFiltered: IPokemonEntry[] = [];
+  pokemons: IPokemon[] = [];
+  pokemonsFiltered: IPokemon[] = [];
   pokemonSelected: IPokemon | null = null;
   generation: number = 1;
+  loading: boolean = true;
 
   // IMAGES
   IMG_POKE_BG: string = "assets/images/pokeball-bg.webp";
@@ -40,18 +48,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getPokemons(generation: number): void {
+    this.loading = true;
     this._pokemonSvc
       .getPokemons(generation)
-      .subscribe((pokemons: IPokemonEntry[]) => {
+      .subscribe((pokemons: IPokemon[]) => {
         this.pokemons = pokemons;
         this.pokemonsFiltered = pokemons;
+        this.loading = false;
       });
   }
 
   filter(query: string): void {
     if (query.length > 0) {
-      this.pokemonsFiltered = this.pokemons.filter((pokemon: IPokemonEntry) =>
-        pokemon.pokemon_species.name.toLowerCase().includes(query.toLowerCase())
+      this.pokemonsFiltered = this.pokemons.filter((pokemon: IPokemon) =>
+        pokemon.name.toLowerCase().includes(query.toLowerCase())
       );
     } else {
       this.pokemonsFiltered = this.pokemons;

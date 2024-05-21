@@ -12,16 +12,16 @@
     </div>
     <div class="modal-card-content">
       <img
-        [src]="pokemon.avatar"
+        [src]="pokemon.info!.sprites.other?.home?.front_default"
         alt="Avatar {{ pokemon.name }}"
       />
       <h1>{{ pokemon.name }}</h1>
       <div class="modal-card-content-types">
         <div
-          *ngFor="let type of pokemon.types"
-          [ngStyle]="type | colorType"
+          *ngFor="let type of pokemon.info!.types"
+          [ngStyle]="type.type.name | colorType"
         >
-          <img [src]="type | iconType" />{{ type }}
+          <img [src]="type.type.name | iconType" />{{ type.type.name }}
         </div>
       </div>
       <div
@@ -31,19 +31,19 @@
         }"
       >
         <div
-          *ngFor="let stats of pokemon.stats"
+          *ngFor="let stats of pokemon.info!.stats"
           class="modal-card-content-stats-content"
         >
           <p class="modal-card-content-stats-content-name">
-            {{ stats.name | nameStats }}
+            {{ stats.stat.name | nameStats }}
           </p>
           <p class="modal-card-content-stats-content-value">
-            {{ stats.value }}
+            {{ stats.base_stat }}
           </p>
           <div class="modal-card-content-stats-content-progress">
             <div
               [ngStyle]="{
-                'width': stats.value | percentageStats,
+                'width': stats.base_stat | percentageStats,
                 'background-image': pokemon.color! | gradientBackground
               }"
             ></div>
@@ -64,10 +64,10 @@
           'overflow-x-auto': pokemon.evolutions.length > 3
         }"
       >
-        <ng-container *ngFor="let evolution of pokemon.evolutions">
+        <ng-container *ngFor="let evolution of pokemon.evolution_data">
           <img
-            [src]="evolution.avatar"
-            alt="Evolution {{ pokemon.name }}"
+            [src]="evolution.sprites.other?.home?.front_default"
+            alt="Evolution {{ evolution.name }}"
           />
         </ng-container>
       </div>

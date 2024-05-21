@@ -4,14 +4,17 @@ import {
   FormBuilder,
   FormGroup,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  Validators
 } from "@angular/forms";
 import { debounceTime } from "rxjs";
+import { ErrorMsgComponent } from "../../../../components/error-msg/error-msg.component";
+import { validations } from "./validations";
 
 @Component({
   selector: "poke-search",
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ErrorMsgComponent, FormsModule, ReactiveFormsModule],
   templateUrl: "./search.component.html",
   styleUrl: "./search.component.scss"
 })
@@ -21,6 +24,9 @@ export class SearchComponent {
 
   // ICONS
   ICON_SEARCH: string = "assets/icons/search.svg";
+
+  // VALIDATIONS
+  validations = validations;
 
   constructor(private _fb: FormBuilder) {
     this.buildData();
@@ -32,7 +38,7 @@ export class SearchComponent {
 
   buildData(): void {
     this.form = this._fb.group({
-      query: [""]
+      query: ["", Validators.maxLength(50)]
     });
   }
 

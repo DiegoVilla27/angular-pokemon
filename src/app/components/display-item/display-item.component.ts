@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input, Renderer2 } from "@angular/core";
-import { IPokemon, IPokemonAvatar } from "../../interfaces/pokemon.interface";
+import { IPokemon } from "../../interfaces/pokemon.interface";
 import { ColorBackgroundPipe } from "../../pipes/color-background.pipe";
 import { ColorTypePipe } from "../../pipes/color-type.pipe";
 import { GradientBackgroundPipe } from "../../pipes/gradient-background.pipe";
@@ -32,18 +32,6 @@ export class DisplayItemComponent {
     private _pokemonSvc: PokemonService,
     private _renderer: Renderer2
   ) {}
-
-  ngOnInit(): void {
-    this.getPokemon();
-  }
-
-  getPokemon(): void {
-    this._pokemonSvc
-      .getEvolutions(this.pokemon.evolution_chain!)
-      .subscribe(
-        (evolutions: IPokemonAvatar[]) => (this.pokemon.evolutions = evolutions)
-      );
-  }
 
   close(): void {
     this._renderer.setStyle(document.body, "overflow-y", "auto");
