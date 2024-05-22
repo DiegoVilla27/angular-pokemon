@@ -5,6 +5,7 @@ Pokemon list first generation
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 Node - Version 20.12.2
 Npm - Version 10.5.0
+Create: `ng new angular-pokemon --style=scss --routing --prefix=poke`
 
 ## Development server
 
